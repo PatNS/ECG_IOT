@@ -1,6 +1,8 @@
 # ECG_IOT
 An IOT 2 stage prediction system using ECG signals for sleep apnea detection with Raspberry Pi gateway and Amazon Web Services (AWS) cloud architecture
 
+![ECG Screening Architecture](https://github.com/PatNS/ECG_IOT/blob/master/ECGScreeningArchitecture.png "ECG Screening Architecture") 
+
 ECG Data Pre-Processing and Classifier Training.ipynb
 This jupyter notebook was written using Python version 2.7. It includes the code for the pre-processing and feature extraction of the ECG signal files from PhysioNet apnea-ecg dataset (https://www.physionet.org/physiobank/database/apnea-ecg/). It also includes the classifier training and testing using the features extracted from this data.
 
