@@ -51,7 +51,7 @@ def RRInterval(SegmentIn):
     HRs = []
     for i in range(lenRR):
         HRs.append (6000/RRIntervals[i])
-    return (HRs)
+    return RRIntervals, HRs
 
 def RRCorrection (RRIntervalValues):
     # Compare RRinterval values with mean+mean / 3 and mean-mean/3
@@ -91,12 +91,12 @@ second RR- interval exceeds the first RR interval by more than 50 ms
         temp = i
     return NN50_count2  
 
-def GenFeatures (HRsArray):
+def GenFeatures (RRsArray, HRsArray):
     data_features = []
     data_features.append(np.mean(HRsArray))
     data_features.append(np.std(HRsArray))
-    data_features.append(NN50(HRsArray))
-    data_features.append(NN50_count2(HRsArray))
+    data_features.append(NN50(RRsArray))
+    data_features.append(NN50_count2(RRsArray))
     return data_features
 
 os.chdir("/home/pi/apneaecg")
@@ -123,9 +123,10 @@ while ( Repeat == 10):
 					ECG = pd.DataFrame({'data' : TempSig}, index=t_ECG)
 					filtered_ecg = butter_highpass_filter(ECG.data,20,fps)
 					#Get HRs
-					HRs = RRInterval(filtered_ecg)
+					RRs, HRs = RRInterval(filtered_ecg)
+					RRsCorrected = RRCorrection(RRs)
 					HRsCorrected = RRCorrection(HRs)
-					Df= GenFeatures(HRsCorrected)
+					Df= GenFeatures(RRsCorrected, HRsCorrected)
 					Dfarray = np.asarray(Df)
 					DfarrayRS = Dfarray.reshape(1,-1)
 					print("For file " + file + " the IOT Gateway prediction is: ")

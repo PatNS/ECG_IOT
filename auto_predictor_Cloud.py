@@ -47,7 +47,7 @@ def RRInterval(SegmentIn):
     HRs = []
     for i in range(lenRR):
         HRs.append (6000/RRIntervals[i])
-    return (HRs)
+    return RRIntervals, HRs
 
 def RRCorrection (RRIntervalValues):
 	# Compare RRinterval values with mean+mean / 3 and mean-mean/3
@@ -87,13 +87,13 @@ second RR- interval exceeds the first RR interval by more than 50 ms
         temp = i
     return NN50_count2
 
-def GenFeatures (HRsArray):
+def GenFeatures (RRsArray, HRsArray):
     data_features = []
     data_features.append(np.mean(HRsArray))
     data_features.append(np.std(HRsArray))
-    data_features.append(NN50(HRsArray))
-    data_features.append(NN50_count2(HRsArray))
-    return data_features
+    data_features.append(NN50(RRsArray))
+    data_features.append(NN50_count2(RRsArray))
+    return data_features	
 
 
 #svm = SVC(C=1.0, gamma='auto', kernel='rbf')
